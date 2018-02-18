@@ -57,21 +57,22 @@ test' = do
   --                 , bench "3" $ nf (uncurry winograd3) (a,b)
   --                 , bench "4" $ nf (uncurry winograd4) (a,b)
   --                 , bench "5" $ nf (uncurry winograd5) (a,b)
+  --                 , bench "6" $ nf (uncurry winograd6) (a,b)
   --                 , bench "StrassenMixed" $ nf (uncurry M.multStrassenMixed) (a,b)
   --                 ]
   --             ]
 
   defaultMain [
     bgroup "mult" [
-                    bgroup "1" [bench "1" $ nf (uncurry winograd1) (a x x, b x x) | x <- [100,200..1000] ],
-                    bgroup "2" [bench "1" $ nf (uncurry winograd2) (a x x, b x x) | x <- [100,200..1000] ],
-                    bgroup "3" [bench "1" $ nf (uncurry winograd3) (a x x, b x x) | x <- [100,200..1000] ],
-                    bgroup "4" [bench "1" $ nf (uncurry winograd4) (a x x, b x x) | x <- [100,200..1000] ]
-                    -- bgroup "5" [bench "1" $ nf (uncurry winograd5) (a x x, b x x) | x <- [100,200..1000] ],
-                    -- bgroup "5" [bench "1" $ nf (uncurry winograd5) (a x x, b x x) | x <- [101,201..1001] ],
-                    -- bgroup "6" [bench "1" $ nf (uncurry winograd6) (a x x, b x x) | x <- [101,201..1001] ],
-                    -- bgroup "s1" [bench "1" $ nf (uncurry M.multStrassenMixed) (a x x, b x x) | x <- [100,200..1000] ],
-                    -- bgroup "s1" [bench "1" $ nf (uncurry M.multStrassenMixed) (a x x, b x x) | x <- [101,201..1001] ]
+                    -- bgroup "1" [bench (show x) $ nf (uncurry winograd1) (a x x, b x x) | x <- [100,200..1000] ],
+                    -- bgroup "2" [bench (show x) $ nf (uncurry winograd2) (a x x, b x x) | x <- [100,200..1000] ],
+                    -- bgroup "3" [bench (show x) $ nf (uncurry winograd3) (a x x, b x x) | x <- [100,200..1000] ],
+                    bgroup "4" [bench (show x) $ nf (uncurry winograd4) (a x x, b x x) | x <- [100,200..1000] ],
+                    bgroup "5" [bench (show x) $ nf (uncurry winograd5) (a x x, b x x) | x <- [100,200..1000] ],
+                    bgroup "5'" [bench (show x) $ nf (uncurry winograd5) (a x x, b x x) | x <- [101,201..1001] ],
+                    bgroup "6" [bench (show x) $ nf (uncurry winograd6) (a x x, b x x) | x <- [101,201..1001] ],
+                    bgroup "s" [bench (show x) $ nf (uncurry M.multStrassenMixed) (a x x, b x x) | x <- [100,200..1000] ],
+                    bgroup "s'" [bench (show x) $ nf (uncurry M.multStrassenMixed) (a x x, b x x) | x <- [101,201..1001] ]
                   ]
               ]
 

@@ -209,10 +209,11 @@ winograd5 a b = if n' == n then c else error "error"
                     acc +(x1+y2)*(x2+y1)
 
 
+
 winograd6 :: (Num a, NFData a) => M.Matrix a -> M.Matrix a -> M.Matrix a
-{-# SPECIALIZE winograd5 :: M.Matrix Double -> M.Matrix Double -> M.Matrix Double #-}
-{-# SPECIALIZE winograd5 :: M.Matrix Int -> M.Matrix Int -> M.Matrix Int #-}
-{-# SPECIALIZE winograd5 :: M.Matrix Rational -> M.Matrix Rational -> M.Matrix Rational #-}
+{-# SPECIALIZE winograd6 :: M.Matrix Double -> M.Matrix Double -> M.Matrix Double #-}
+{-# SPECIALIZE winograd6 :: M.Matrix Int -> M.Matrix Int -> M.Matrix Int #-}
+{-# SPECIALIZE winograd6 :: M.Matrix Rational -> M.Matrix Rational -> M.Matrix Rational #-}
 winograd6 a b = if n' == n then c else error "error"
   where
     m = M.nrows a
@@ -233,23 +234,23 @@ winograd6 a b = if n' == n then c else error "error"
           M.matrix m p $
           \(i,j) ->
           let
-            t1 = V.unsafeIndex a' (i-1)
-            t2 = V.unsafeIndex b' (j-1)
+            v1 = V.unsafeIndex a' (i-1)
+            v2 = V.unsafeIndex b' (j-1)
           in
             V.unsafeIndex rows (i-1) +
             V.unsafeIndex cols (j-1) +
-            helper t1 t2 +
-            V.last t1 * V.last t2
+            helper v1 v2 +
+            V.last v1 * V.last v2
         else
           M.matrix m p $
           \(i,j) ->
           let
-            t1 = V.unsafeIndex a' (i-1)
-            t2 = V.unsafeIndex b' (j-1)
+            v1 = V.unsafeIndex a' (i-1)
+            v2 = V.unsafeIndex b' (j-1)
           in
             V.unsafeIndex rows (i-1) +
             V.unsafeIndex cols (j-1) +
-            helper t1 t2
+            helper v1 v2
 
     helper r c = foldl (helper' r c) 0 [0, 2 .. n - 2]
     helper' r c acc i = let
